@@ -13,10 +13,12 @@ public class GameStates {
     private boolean running = true;
     private Snake snake = new Snake();
     private Food food = new Food();
-    private Obstacle obstacle;
+    private Obstacle obstacle = new Obstacle();
 
     public GameStates() {
         food.spawn(GameConfig.PARALLEL_FRAMES, GameConfig.PARALLEL_FRAMES);
+        obstacle.spawnObstacle(GameConfig.PARALLEL_FRAMES, GameConfig.PARALLEL_FRAMES);
+        
     }
 
     public void checkCollision() {
@@ -46,7 +48,11 @@ public class GameStates {
     }
     
     public boolean checkObstacleCollision() {
-        return snake.getSnakeX()[0] == obstacle.getX() && snake.getSnakeY()[0] == obstacle.getY();
+        if(snake.getSnakeX()[0]  == obstacle.getX() && snake.getSnakeY()[0] == obstacle.getY()){
+            obstacle.spawnObstacle(GameConfig.PARALLEL_FRAMES, GameConfig.PARALLEL_FRAMES);
+            return true;
+        }
+        return false;
     }
 
     public Snake getSnake() {
@@ -57,6 +63,10 @@ public class GameStates {
         return food;
     }
 
+    public Obstacle getObstacle() {
+        return obstacle;
+    }
+    
     public boolean isRunning() {
         return running;
     }

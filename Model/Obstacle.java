@@ -9,37 +9,42 @@ public class Obstacle {
 
     private int x;
     private int y;
-    private final float lifespan;
+    private float lifespan;
     private boolean isActive;
-    private static final Random random = new Random();
+    private Random random = new Random();
 
     private static final int MIN_LIFESPAN = 3000;
     private static final int MAX_LIFESPAN = 9000;
 
     private static final ArrayList<Obstacle> obstacles = new ArrayList<>();
 
-    public Obstacle(int x, int y, long lifespan) {
-        this.x = x;
-        this.y = y;
-        this.lifespan = lifespan;
-        this.isActive = true;
+       public Obstacle() {
+        lifespan = randomLifespan();
+        startObstacleRespawn();
+    }
+    
+        private void startObstacleRespawn() {
+        Timer timer = new Timer();
+        timer.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                spawnObstacle(GameConfig.PARALLEL_FRAMES, GameConfig.PARALLEL_FRAMES);
+            }
+        }, 0, (long) lifespan);
     }
 
-    public static void spawnObstacle(int maxX, int maxY) {
-        int x = random.nextInt(maxX) * GameConfig.SQUARE_SIZE;
-        int y = random.nextInt(maxY) * GameConfig.SQUARE_SIZE;
-        long lifespan = randomLifespan();
-
-        Obstacle obstacle = new Obstacle(x, y, lifespan);
-        obstacles.add(obstacle);
+    public void spawnObstacle(int maxX, int maxY) {
+        x = random.nextInt(maxX) * GameConfig.SQUARE_SIZE;
+        y = random.nextInt(maxY) * GameConfig.SQUARE_SIZE;
+        lifespan = randomLifespan();
+        isActive = true;
 
         new Timer().schedule(new TimerTask() {
             @Override
             public void run() {
-                obstacle.isActive = false;
-                obstacles.remove(obstacle);
+                isActive = false;
             }
-        }, lifespan);
+        }, (long) lifespan);
     }
 
     public int getX() {
@@ -54,12 +59,14 @@ public class Obstacle {
         return isActive;
     }
 
-    private static long randomLifespan() {
+    private long randomLifespan() {
         return MIN_LIFESPAN + random.nextInt(MAX_LIFESPAN - MIN_LIFESPAN + 1);
     }
 
     public static ArrayList<Obstacle> getObstacles() {
         return obstacles;
     }
+    
+    
 
 }
