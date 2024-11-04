@@ -3,7 +3,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JInternalFrame.java to edit this template
  */
 package View;
+import Controller.GameController;
+import Model.GameConfig;
+import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.ImageIcon;
 
 
@@ -11,13 +16,56 @@ import javax.swing.ImageIcon;
  *
  * @author zulay
  */
-public class FrmSnake extends javax.swing.JInternalFrame {
+public class FrmSnake extends javax.swing.JInternalFrame implements ActionListener{
+    private ImageIcon fontIcon = new ImageIcon(getClass().getResource("/Access/Img/Fondo.png"));
+    private ImageIcon foodIcon = new ImageIcon(getClass().getResource("/Access/Img/aple.png"));
+    private ImageIcon obstacleIcon = new ImageIcon(getClass().getResource("/Access/Img/spider.png"));
+    private GameController controller;
 
+    public void setController(GameController controller) {
+        this.controller = controller;
+    }
     /**
      * Creates new form FrmSnake
      */
     public FrmSnake() {
         initComponents();
+    }
+    
+    
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        //Font
+        g.drawImage(fontIcon.getImage(),0,0,getWidth(),getHeight(),this);
+        //Food
+        g.drawImage(foodIcon.getImage(),this.controller.getGameState().getFood().getX(), 
+                this.controller.getGameState().getFood().getY(),
+                GameConfig.SQUARE_SIZE, GameConfig.SQUARE_SIZE,this);
+        //Obstacle
+        g.drawImage(obstacleIcon.getImage(),this.controller.getGameState().getObstacle().getX(), 
+                this.controller.getGameState().getObstacle().getY(),
+                GameConfig.SQUARE_SIZE, GameConfig.SQUARE_SIZE,this);
+        //Snake
+        g.setColor(Color.green);
+        for (int i = 0; i < this.controller.getGameState().getSnake().getSnakeBody(); i++) {
+            float factor = (float) i / this.controller.getGameState().getSnake().getSnakeBody();
+            g.setColor(new Color((int)(34 * (1 - factor)), (int)(139 * (1 - factor)), (int)(34 * factor)));
+            g.fillRect(this.controller.getGameState().getSnake().getSnakeX()[i], 
+                    this.controller.getGameState().getSnake().getSnakeY()[i], GameConfig.SQUARE_SIZE, GameConfig.SQUARE_SIZE);
+        }
+    }
+    
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        this.controller.action();
+    }
+    
+    public void loose(){
+        this.controller.getGameState().getObstacle().getObstacleRespawn().cancel();
+        FrmReboot reboot = new FrmReboot(null, true);
+        reboot.setVisible(true);
+        dispose();
     }
 
     /**
@@ -29,10 +77,10 @@ public class FrmSnake extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        ImageIcon icon = new ImageIcon(getClass().getResource("/Access/Img/Fondo.png"));
+        ImageIcon ficon = new ImageIcon(getClass().getResource("/Access/Img/Fondo.png"));
         jPanel1 = new javax.swing.JPanel(){
             public void paintComponent(Graphics g){
-                g.drawImage(icon.getImage(),0,0,getWidth(),getHeight(),this);
+                g.drawImage(ficon.getImage(),0,0,getWidth(),getHeight(),this);
             }
         };
         jPanel2 = new javax.swing.JPanel();
@@ -42,15 +90,22 @@ public class FrmSnake extends javax.swing.JInternalFrame {
         setForeground(new java.awt.Color(255, 255, 255));
         setTitle("SNAKE GAME");
 
+        jPanel1.setPreferredSize(new java.awt.Dimension(600, 600));
+        jPanel1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jPanel1KeyPressed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 814, Short.MAX_VALUE)
+            .addGap(0, 600, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 480, Short.MAX_VALUE)
+            .addGap(0, 600, Short.MAX_VALUE)
         );
 
         jPanel2.setBackground(new java.awt.Color(51, 255, 51));
@@ -97,6 +152,23 @@ public class FrmSnake extends javax.swing.JInternalFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jPanel1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jPanel1KeyPressed
+        switch (evt.getKeyChar()) {
+                case 'w', 'W' -> {
+                    this.controller.keyPressed('w');
+                }
+                case 'a', 'A' -> {
+                    this.controller.keyPressed('a');
+                }
+                case 's', 'S' -> {
+                    this.controller.keyPressed('s');
+                }
+                case 'd', 'D' -> {
+                    this.controller.keyPressed('d');
+                }
+            }
+    }//GEN-LAST:event_jPanel1KeyPressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

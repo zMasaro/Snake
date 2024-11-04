@@ -11,6 +11,7 @@ public class Obstacle {
     private int y;
     private float lifespan;
     private boolean isActive;
+    private Timer obstacleRespawn;
     private Random random = new Random();
 
     private static final int MIN_LIFESPAN = 3000;
@@ -24,8 +25,8 @@ public class Obstacle {
     }
     
         private void startObstacleRespawn() {
-        Timer timer = new Timer();
-        timer.scheduleAtFixedRate(new TimerTask() {
+        obstacleRespawn = new Timer();
+        obstacleRespawn.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
                 spawnObstacle(GameConfig.PARALLEL_FRAMES, GameConfig.PARALLEL_FRAMES);
@@ -53,6 +54,10 @@ public class Obstacle {
 
     public int getY() {
         return y;
+    }
+
+    public Timer getObstacleRespawn() {
+        return obstacleRespawn;
     }
 
     public boolean isIsActive() {

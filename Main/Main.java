@@ -7,6 +7,8 @@ package Main;
 
 import Controller.GameController;
 import Model.GameStates;
+import View.FrmSnake;
+import javax.swing.JDesktopPane;
 import javax.swing.JFrame;
 
 
@@ -17,11 +19,13 @@ import javax.swing.JFrame;
 public class Main {
     public static void main(String[] args) {
         GameStates gameState = new GameStates();
-        GameView gameView = new GameView(gameState);
+        FrmSnake gameView = new FrmSnake();
         GameController gameController = new GameController(gameState, gameView);
 
         JFrame frame = new JFrame("Snake Game");
-        frame.add(gameView);
+        JDesktopPane desk = new JDesktopPane();
+        frame.add(desk);
+        desk.add(gameView);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);
