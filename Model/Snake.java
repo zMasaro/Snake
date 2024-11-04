@@ -42,11 +42,22 @@ public class Snake {
         direction = 'd';
     }
 
-    public void snakeMove() {
-        for (int i = snakeBody; i > 0; i--) {
-            snakeX[i] = snakeX[i - 1];
-            snakeY[i] = snakeY[i - 1];
+    private void growRecursive(int index) {
+        // Caso base: si estamos en el último segmento actual de la serpiente
+        if (index == 0) {
+            // El nuevo segmento toma la posición del último segmento actual
+            snakeX[snakeBody] = snakeX[snakeBody - 1];
+            snakeY[snakeBody] = snakeY[snakeBody - 1];
+        } else {
+            // Paso recursivo: mueve cada segmento hacia adelante
+            snakeX[index] = snakeX[index - 1];
+            snakeY[index] = snakeY[index - 1];
+            growRecursive(index - 1);
         }
+    }
+
+    public void snakeMove() {
+        growRecursive(snakeBody);
         switch (direction) {
             case 'd' -> {
                 snakeX[0] = snakeX[0] + GameConfig.SQUARE_SIZE;
@@ -63,7 +74,7 @@ public class Snake {
         }
     }
 
-    public void changeDirection(char direction ) {
+    public void changeDirection(char direction) {
         if ((this.direction == 'w' && direction != 's')
                 || (this.direction == 's' && direction != 'w')
                 || (this.direction == 'a' && direction != 'd')

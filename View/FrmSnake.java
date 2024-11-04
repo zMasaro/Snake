@@ -4,12 +4,16 @@
  */
 package View;
 import Controller.GameController;
+import Model.Chronometer;
 import Model.GameConfig;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 
 
 /**
@@ -21,6 +25,11 @@ public class FrmSnake extends javax.swing.JInternalFrame implements ActionListen
     private ImageIcon foodIcon = new ImageIcon(getClass().getResource("/Access/Img/aple.png"));
     private ImageIcon obstacleIcon = new ImageIcon(getClass().getResource("/Access/Img/spider.png"));
     private GameController controller;
+    private Chronometer chronometer;
+
+    public JLabel getLbTime() {
+        return lbTime;
+    }
 
     public void setController(GameController controller) {
         this.controller = controller;
@@ -30,31 +39,34 @@ public class FrmSnake extends javax.swing.JInternalFrame implements ActionListen
      */
     public FrmSnake() {
         initComponents();
+        this.addKeyListener(new Controls());
+        chronometer = new Chronometer(this);
+        chronometer.start();
     }
     
     
-    @Override
-    protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        //Font
-        g.drawImage(fontIcon.getImage(),0,0,getWidth(),getHeight(),this);
-        //Food
-        g.drawImage(foodIcon.getImage(),this.controller.getGameState().getFood().getX(), 
-                this.controller.getGameState().getFood().getY(),
-                GameConfig.SQUARE_SIZE, GameConfig.SQUARE_SIZE,this);
-        //Obstacle
-        g.drawImage(obstacleIcon.getImage(),this.controller.getGameState().getObstacle().getX(), 
-                this.controller.getGameState().getObstacle().getY(),
-                GameConfig.SQUARE_SIZE, GameConfig.SQUARE_SIZE,this);
-        //Snake
-        g.setColor(Color.green);
-        for (int i = 0; i < this.controller.getGameState().getSnake().getSnakeBody(); i++) {
-            float factor = (float) i / this.controller.getGameState().getSnake().getSnakeBody();
-            g.setColor(new Color((int)(34 * (1 - factor)), (int)(139 * (1 - factor)), (int)(34 * factor)));
-            g.fillRect(this.controller.getGameState().getSnake().getSnakeX()[i], 
-                    this.controller.getGameState().getSnake().getSnakeY()[i], GameConfig.SQUARE_SIZE, GameConfig.SQUARE_SIZE);
-        }
-    }
+//    @Override
+//    protected void paintComponent(Graphics g) {
+//        super.paintComponent(g);
+//        //Font
+////        g.drawImage(fontIcon.getImage(),0,0,getWidth(),getHeight(),this);
+//        //Food
+//        g.drawImage(foodIcon.getImage(),this.controller.getGameState().getFood().getX(), 
+//                this.controller.getGameState().getFood().getY(),
+//                GameConfig.SQUARE_SIZE, GameConfig.SQUARE_SIZE,this);
+//        //Obstacle
+//        g.drawImage(obstacleIcon.getImage(),this.controller.getGameState().getObstacle().getX(), 
+//                this.controller.getGameState().getObstacle().getY(),
+//                GameConfig.SQUARE_SIZE, GameConfig.SQUARE_SIZE,this);
+//        //Snake
+//        g.setColor(Color.green);
+//        for (int i = 0; i < this.controller.getGameState().getSnake().getSnakeBody(); i++) {
+//            float factor = (float) i / this.controller.getGameState().getSnake().getSnakeBody();
+//            g.setColor(new Color((int)(34 * (1 - factor)), (int)(139 * (1 - factor)), (int)(34 * factor)));
+//            g.fillRect(this.controller.getGameState().getSnake().getSnakeX()[i], 
+//                    this.controller.getGameState().getSnake().getSnakeY()[i], GameConfig.SQUARE_SIZE, GameConfig.SQUARE_SIZE);
+//        }
+//    }
     
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -63,6 +75,7 @@ public class FrmSnake extends javax.swing.JInternalFrame implements ActionListen
     
     public void loose(){
         this.controller.getGameState().getObstacle().getObstacleRespawn().cancel();
+        chronometer.stop();
         FrmReboot reboot = new FrmReboot(null, true);
         reboot.setVisible(true);
         dispose();
@@ -78,34 +91,54 @@ public class FrmSnake extends javax.swing.JInternalFrame implements ActionListen
     private void initComponents() {
 
         ImageIcon ficon = new ImageIcon(getClass().getResource("/Access/Img/Fondo.png"));
-        jPanel1 = new javax.swing.JPanel(){
+        jpSnake = new javax.swing.JPanel(){
             public void paintComponent(Graphics g){
                 g.drawImage(ficon.getImage(),0,0,getWidth(),getHeight(),this);
+                g.drawImage(foodIcon.getImage(),controller.getGameState().getFood().getX(),
+                    controller.getGameState().getFood().getY(),
+                    GameConfig.SQUARE_SIZE, GameConfig.SQUARE_SIZE,this);
+                //Obstacle
+                g.drawImage(obstacleIcon.getImage(),controller.getGameState().getObstacle().getX(),
+                    controller.getGameState().getObstacle().getY(),
+                    GameConfig.SQUARE_SIZE, GameConfig.SQUARE_SIZE,this);
+                //Snake
+                g.setColor(Color.green);
+                for (int i = 0; i < controller.getGameState().getSnake().getSnakeBody(); i++) {
+                    float factor = 1 - (float) i / controller.getGameState().getSnake().getSnakeBody();
+                    g.setColor(new Color((int)(34 * factor), (int)(139 * factor), (int)(34 * (1 - factor))));
+                    g.fillRect(controller.getGameState().getSnake().getSnakeX()[i],
+                        controller.getGameState().getSnake().getSnakeY()[i],
+                        GameConfig.SQUARE_SIZE, GameConfig.SQUARE_SIZE);
+                }
             }
         };
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        lbTime = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(102, 255, 51));
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setForeground(new java.awt.Color(255, 255, 255));
         setTitle("SNAKE GAME");
 
-        jPanel1.setPreferredSize(new java.awt.Dimension(600, 600));
-        jPanel1.addKeyListener(new java.awt.event.KeyAdapter() {
+        jpSnake.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jpSnake.setPreferredSize(new java.awt.Dimension(615, 615));
+        jpSnake.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                jPanel1KeyPressed(evt);
+                jpSnakeKeyPressed(evt);
             }
         });
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 600, Short.MAX_VALUE)
+        javax.swing.GroupLayout jpSnakeLayout = new javax.swing.GroupLayout(jpSnake);
+        jpSnake.setLayout(jpSnakeLayout);
+        jpSnakeLayout.setHorizontalGroup(
+            jpSnakeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 615, Short.MAX_VALUE)
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 600, Short.MAX_VALUE)
+        jpSnakeLayout.setVerticalGroup(
+            jpSnakeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 615, Short.MAX_VALUE)
         );
 
         jPanel2.setBackground(new java.awt.Color(51, 255, 51));
@@ -118,6 +151,11 @@ public class FrmSnake extends javax.swing.JInternalFrame implements ActionListen
         jLabel1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jLabel1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
 
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setText("Tiempo");
+
+        lbTime.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -125,13 +163,24 @@ public class FrmSnake extends javax.swing.JInternalFrame implements ActionListen
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(16, 16, 16)
                 .addComponent(jLabel1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lbTime, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(149, 149, 149))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel1))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(15, 15, 15)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lbTime, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -139,7 +188,7 @@ public class FrmSnake extends javax.swing.JInternalFrame implements ActionListen
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jpSnake, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
@@ -147,13 +196,13 @@ public class FrmSnake extends javax.swing.JInternalFrame implements ActionListen
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jpSnake, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jPanel1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jPanel1KeyPressed
+    private void jpSnakeKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jpSnakeKeyPressed
         switch (evt.getKeyChar()) {
                 case 'w', 'W' -> {
                     this.controller.keyPressed('w');
@@ -168,12 +217,34 @@ public class FrmSnake extends javax.swing.JInternalFrame implements ActionListen
                     this.controller.keyPressed('d');
                 }
             }
-    }//GEN-LAST:event_jPanel1KeyPressed
+    }//GEN-LAST:event_jpSnakeKeyPressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jpSnake;
+    private javax.swing.JLabel lbTime;
     // End of variables declaration//GEN-END:variables
+public class Controls extends KeyAdapter {
+
+        @Override
+        public void keyPressed(KeyEvent e) {
+            switch (e.getKeyChar()) {
+                case 'w', 'W' -> {
+                    controller.keyPressed('w');
+                }
+                case 'a', 'A' -> {
+                    controller.keyPressed('a');
+                }
+                case 's', 'S' -> {
+                    controller.keyPressed('s');
+                }
+                case 'd', 'D' -> {
+                    controller.keyPressed('d');
+                }
+            }
+        }
+    }
 }

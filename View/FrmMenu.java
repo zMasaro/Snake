@@ -34,6 +34,7 @@ public class FrmMenu extends javax.swing.JFrame {
         btnplay1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(1000, 800));
 
         btnRules.setBackground(new java.awt.Color(0, 153, 51));
         btnRules.setFont(new java.awt.Font("Showcard Gothic", 0, 15)); // NOI18N
