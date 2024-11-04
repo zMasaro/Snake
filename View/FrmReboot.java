@@ -3,6 +3,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JDialog.java to edit this template
  */
 package View;
+import Controller.GameController;
+import Model.GameStates;
 import java.awt.Graphics;
 import javax.swing.ImageIcon;
 
@@ -123,7 +125,10 @@ public class FrmReboot extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnReiniciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReiniciarActionPerformed
-        // TODO add your handling code here:
+       GameStates gameState = new GameStates();
+        FrmSnake gameView = new FrmSnake();
+        GameController gameController = new GameController(gameState, gameView);
+        gameView.setVisible(true);
     }//GEN-LAST:event_btnReiniciarActionPerformed
 
     /**

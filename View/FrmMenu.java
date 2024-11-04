@@ -1,15 +1,10 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
+
 package View;
+import Controller.GameController;
+import Model.GameStates;
 import java.awt.Graphics;
 import javax.swing.ImageIcon;
 
-/**
- *
- * @author zulay
- */
 public class FrmMenu extends javax.swing.JFrame {
 
     /**
@@ -30,7 +25,7 @@ public class FrmMenu extends javax.swing.JFrame {
 
         jSlider1 = new javax.swing.JSlider();
         ImageIcon icon = new ImageIcon(getClass().getResource("/Access/Img/snake.png"));
-        jDesktopPane1 = new javax.swing.JDesktopPane(){
+        Desktop = new javax.swing.JDesktopPane(){
             public void paintComponent(Graphics g){
                 g.drawImage(icon.getImage(),0,0,getWidth(),getHeight(),this);
             }
@@ -79,24 +74,24 @@ public class FrmMenu extends javax.swing.JFrame {
             }
         });
 
-        jDesktopPane1.setLayer(btnRules, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jDesktopPane1.setLayer(btnplay1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        Desktop.setLayer(btnRules, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        Desktop.setLayer(btnplay1, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
-        javax.swing.GroupLayout jDesktopPane1Layout = new javax.swing.GroupLayout(jDesktopPane1);
-        jDesktopPane1.setLayout(jDesktopPane1Layout);
-        jDesktopPane1Layout.setHorizontalGroup(
-            jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jDesktopPane1Layout.createSequentialGroup()
+        javax.swing.GroupLayout DesktopLayout = new javax.swing.GroupLayout(Desktop);
+        Desktop.setLayout(DesktopLayout);
+        DesktopLayout.setHorizontalGroup(
+            DesktopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(DesktopLayout.createSequentialGroup()
                 .addGap(0, 731, Short.MAX_VALUE)
                 .addComponent(btnplay1, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(jDesktopPane1Layout.createSequentialGroup()
+            .addGroup(DesktopLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(btnRules, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        jDesktopPane1Layout.setVerticalGroup(
-            jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jDesktopPane1Layout.createSequentialGroup()
+        DesktopLayout.setVerticalGroup(
+            DesktopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, DesktopLayout.createSequentialGroup()
                 .addGap(19, 19, 19)
                 .addComponent(btnRules, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 146, Short.MAX_VALUE)
@@ -108,22 +103,27 @@ public class FrmMenu extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jDesktopPane1)
+            .addComponent(Desktop)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jDesktopPane1)
+            .addComponent(Desktop)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnRulesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRulesActionPerformed
-        // TODO add your handling code here:
+        FrmRules frm= new FrmRules(this,true);
+        frm.setVisible(true);
     }//GEN-LAST:event_btnRulesActionPerformed
 
     private void btnplay1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnplay1ActionPerformed
-        // TODO add your handling code here:
+        GameStates gameState = new GameStates();
+        FrmSnake gameView = new FrmSnake();
+        GameController gameController = new GameController(gameState, gameView);
+        this.Desktop.add(gameView);
+        gameView.setVisible(true);
     }//GEN-LAST:event_btnplay1ActionPerformed
 
     /**
@@ -162,9 +162,9 @@ public class FrmMenu extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JDesktopPane Desktop;
     private javax.swing.JButton btnRules;
     private javax.swing.JButton btnplay1;
-    private javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JSlider jSlider1;
     // End of variables declaration//GEN-END:variables
 }
