@@ -29,6 +29,7 @@ public class FrmSnake extends javax.swing.JInternalFrame implements ActionListen
     private FrmMenu menu;
     private int apple;
 
+
     public JLabel getLbTime() {
         return lbTime;
     }
@@ -55,6 +56,23 @@ public class FrmSnake extends javax.swing.JInternalFrame implements ActionListen
         chronometer = new Chronometer(this);
         chronometer.start();
     }
+    public void changeSnakeColor(Color newColor, int duration) {
+    snakeColor =  Color.blue;
+    repaint();
+
+    
+    new Thread(() -> {
+        try {
+            Thread.sleep(duration);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        snakeColor = Color.green; 
+        repaint(); 
+    }).start();
+}
+
+
     
     
 //    @Override
@@ -120,6 +138,7 @@ public class FrmSnake extends javax.swing.JInternalFrame implements ActionListen
                 g.drawImage(obstacleIcon.getImage(),controller.getGameState().getObstacle().getX(),
                     controller.getGameState().getObstacle().getY(),
                     GameConfig.SQUARE_SIZE, GameConfig.SQUARE_SIZE,this);
+
                 //Snake
                 g.setColor(Color.green);
                 for (int i = 0; i < controller.getGameState().getSnake().getSnakeBody(); i++) {
@@ -148,6 +167,9 @@ public class FrmSnake extends javax.swing.JInternalFrame implements ActionListen
                 jpSnakeKeyPressed(evt);
             }
         });
+        // Variable para el color de la serpiente
+
+        // Modifica el método paintComponent para usar snakeCol
 
         javax.swing.GroupLayout jpSnakeLayout = new javax.swing.GroupLayout(jpSnake);
         jpSnake.setLayout(jpSnakeLayout);
@@ -214,7 +236,8 @@ public class FrmSnake extends javax.swing.JInternalFrame implements ActionListen
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jpSnake, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jpSnake, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         pack();
