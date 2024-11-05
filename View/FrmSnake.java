@@ -27,6 +27,7 @@ public class FrmSnake extends javax.swing.JInternalFrame implements ActionListen
     private GameController controller;
     private Chronometer chronometer;
     private FrmMenu menu;
+    private int apple;
 
     public JLabel getLbTime() {
         return lbTime;
@@ -39,6 +40,12 @@ public class FrmSnake extends javax.swing.JInternalFrame implements ActionListen
     public void setMenu(FrmMenu menu) {
         this.menu = menu;
     }
+
+    public int getApple() {
+        return controller.getGameState().getSnake().getSnakeBody()-5;
+    }
+
+    
     /**
      * Creates new form FrmSnake
      */
@@ -76,15 +83,19 @@ public class FrmSnake extends javax.swing.JInternalFrame implements ActionListen
     @Override
     public void actionPerformed(ActionEvent e) {
         this.controller.action();
+        apple = controller.getGameState().getSnake().getSnakeBody()-5;
+        txtApple.setText(Integer.toString(apple));
     }
     
     public void loose(){
         this.controller.getGameState().getObstacle().getObstacleRespawn().cancel();
-        chronometer.stop();
+        //chronometer.stop();
         FrmReboot reboot = new FrmReboot(null, true);
         reboot.setMenu(menu);
         reboot.setLocation((menu.getDesktop().getWidth()-reboot.getWidth())/2, 
                 (menu.getDesktop().getHeight()-reboot.getHeight())/2);
+        reboot.setBtnApple(apple);
+        reboot.setBtnRecord(apple);
         reboot.setVisible(true);
         dispose();
     }
@@ -98,7 +109,7 @@ public class FrmSnake extends javax.swing.JInternalFrame implements ActionListen
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        ImageIcon ficon = new ImageIcon(getClass().getResource("/Access/Img/Fondo.png"));
+        ImageIcon ficon = new ImageIcon(getClass().getResource("/Access/Img/FondoPerfecto.png"));
         jpSnake = new javax.swing.JPanel(){
             public void paintComponent(Graphics g){
                 g.drawImage(ficon.getImage(),0,0,getWidth(),getHeight(),this);
@@ -121,7 +132,7 @@ public class FrmSnake extends javax.swing.JInternalFrame implements ActionListen
             }
         };
         jPanel2 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        txtApple = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         lbTime = new javax.swing.JLabel();
 
@@ -131,7 +142,7 @@ public class FrmSnake extends javax.swing.JInternalFrame implements ActionListen
         setTitle("SNAKE GAME");
 
         jpSnake.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jpSnake.setPreferredSize(new java.awt.Dimension(615, 615));
+        jpSnake.setPreferredSize(new java.awt.Dimension(600, 600));
         jpSnake.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 jpSnakeKeyPressed(evt);
@@ -146,18 +157,17 @@ public class FrmSnake extends javax.swing.JInternalFrame implements ActionListen
         );
         jpSnakeLayout.setVerticalGroup(
             jpSnakeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 615, Short.MAX_VALUE)
+            .addGap(0, 600, Short.MAX_VALUE)
         );
 
         jPanel2.setBackground(new java.awt.Color(51, 255, 51));
 
-        jLabel1.setFont(new java.awt.Font("Showcard Gothic", 0, 14)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Access/Img/aple.png"))); // NOI18N
-        jLabel1.setText("0");
-        jLabel1.setFocusable(false);
-        jLabel1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jLabel1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        txtApple.setFont(new java.awt.Font("Showcard Gothic", 0, 14)); // NOI18N
+        txtApple.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Access/Img/aple.png"))); // NOI18N
+        txtApple.setText("0");
+        txtApple.setFocusable(false);
+        txtApple.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        txtApple.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
 
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("Tiempo");
@@ -170,7 +180,7 @@ public class FrmSnake extends javax.swing.JInternalFrame implements ActionListen
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(16, 16, 16)
-                .addComponent(jLabel1)
+                .addComponent(txtApple)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -183,7 +193,7 @@ public class FrmSnake extends javax.swing.JInternalFrame implements ActionListen
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jLabel1))
+                        .addComponent(txtApple))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(15, 15, 15)
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -196,7 +206,7 @@ public class FrmSnake extends javax.swing.JInternalFrame implements ActionListen
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jpSnake, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jpSnake, javax.swing.GroupLayout.DEFAULT_SIZE, 615, Short.MAX_VALUE)
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
@@ -229,11 +239,11 @@ public class FrmSnake extends javax.swing.JInternalFrame implements ActionListen
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jpSnake;
     private javax.swing.JLabel lbTime;
+    private javax.swing.JLabel txtApple;
     // End of variables declaration//GEN-END:variables
 public class Controls extends KeyAdapter {
 

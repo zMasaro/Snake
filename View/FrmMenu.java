@@ -7,10 +7,21 @@ import javax.swing.ImageIcon;
 import javax.swing.JDesktopPane;
 
 public class FrmMenu extends javax.swing.JFrame {
-
+    
+    public int record;
+    
     /**
      * Creates new form FrmMenu
      */
+    
+    public int getRecord() {
+        return record;
+    }
+
+    public void setRecord(int record) {
+        this.record = record;
+    }
+
     public FrmMenu() {
         initComponents();
         this.setLocationRelativeTo(null);
@@ -48,7 +59,6 @@ public class FrmMenu extends javax.swing.JFrame {
 
         btnRules.setBackground(new java.awt.Color(0, 153, 51));
         btnRules.setFont(new java.awt.Font("Showcard Gothic", 0, 15)); // NOI18N
-        btnRules.setForeground(new java.awt.Color(0, 0, 0));
         btnRules.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Access/Img/inbox.png"))); // NOI18N
         btnRules.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btnRules.setBorderPainted(false);
@@ -67,7 +77,6 @@ public class FrmMenu extends javax.swing.JFrame {
 
         btnplay1.setBackground(new java.awt.Color(0, 153, 51));
         btnplay1.setFont(new java.awt.Font("Showcard Gothic", 0, 15)); // NOI18N
-        btnplay1.setForeground(new java.awt.Color(0, 0, 0));
         btnplay1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Access/Img/play92.png"))); // NOI18N
         btnplay1.setText("Jugar");
         btnplay1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
