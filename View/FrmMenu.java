@@ -4,6 +4,7 @@ import Controller.GameController;
 import Model.GameStates;
 import java.awt.Graphics;
 import javax.swing.ImageIcon;
+import javax.swing.JDesktopPane;
 
 public class FrmMenu extends javax.swing.JFrame {
 
@@ -12,6 +13,15 @@ public class FrmMenu extends javax.swing.JFrame {
      */
     public FrmMenu() {
         initComponents();
+        this.setLocationRelativeTo(null);
+    }
+    
+    public FrmMenu getFrmMenu(){
+        return this;
+    }
+
+    public JDesktopPane getDesktop() {
+        return Desktop;
     }
 
     /**
@@ -120,13 +130,19 @@ public class FrmMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_btnRulesActionPerformed
 
     private void btnplay1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnplay1ActionPerformed
+        initGame();
+    }//GEN-LAST:event_btnplay1ActionPerformed
+
+    public void initGame(){
         GameStates gameState = new GameStates();
         FrmSnake gameView = new FrmSnake();
         GameController gameController = new GameController(gameState, gameView);
         this.Desktop.add(gameView);
+        gameView.setLocation((this.Desktop.getWidth()-gameView.getWidth())/2, 
+                (this.Desktop.getHeight()-gameView.getHeight())/2);
         gameView.setVisible(true);
-    }//GEN-LAST:event_btnplay1ActionPerformed
-
+        gameView.setMenu(this);
+}
     /**
      * @param args the command line arguments
      */

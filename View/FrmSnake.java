@@ -26,6 +26,7 @@ public class FrmSnake extends javax.swing.JInternalFrame implements ActionListen
     private ImageIcon obstacleIcon = new ImageIcon(getClass().getResource("/Access/Img/spider.png"));
     private GameController controller;
     private Chronometer chronometer;
+    private FrmMenu menu;
 
     public JLabel getLbTime() {
         return lbTime;
@@ -33,6 +34,10 @@ public class FrmSnake extends javax.swing.JInternalFrame implements ActionListen
 
     public void setController(GameController controller) {
         this.controller = controller;
+    }
+    
+    public void setMenu(FrmMenu menu) {
+        this.menu = menu;
     }
     /**
      * Creates new form FrmSnake
@@ -77,6 +82,9 @@ public class FrmSnake extends javax.swing.JInternalFrame implements ActionListen
         this.controller.getGameState().getObstacle().getObstacleRespawn().cancel();
         chronometer.stop();
         FrmReboot reboot = new FrmReboot(null, true);
+        reboot.setMenu(menu);
+        reboot.setLocation((menu.getDesktop().getWidth()-reboot.getWidth())/2, 
+                (menu.getDesktop().getHeight()-reboot.getHeight())/2);
         reboot.setVisible(true);
         dispose();
     }
