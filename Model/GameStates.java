@@ -4,12 +4,18 @@
  */
 package Model;
 
+import Controller.GameController;
+import java.io.File;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+
 /**
  *
  * @author emman
  */
 public class GameStates {
-
+    private GameController controller;
     private boolean running = true;
     private Snake snake = new Snake();
     private Food food = new Food();
@@ -23,6 +29,7 @@ public class GameStates {
 
     public void checkCollision() {
         if (checkWallCollision() || checkSelfCollision() || checkObstacleCollision()) {
+            sound("src/Access/Sounds/collisionpad.wav");
             running = false;
         }
     }
@@ -43,6 +50,8 @@ public class GameStates {
     public void checkFoodCollision() {
         if (snake.getSnakeX()[0] == food.getX() && snake.getSnakeY()[0] == food.getY()) {
             snake.grow();
+            controller.getTimer().setDelay(controller.getTimer().getDelay()-1);
+            sound("src/Access/Sounds/collision.wav");
             food.spawn(GameConfig.PARALLEL_FRAMES, GameConfig.PARALLEL_FRAMES);
         }
     }
@@ -53,6 +62,17 @@ public class GameStates {
             return true;
         }
         return false;
+    }
+    
+    public void sound(String url) {
+        try{
+        AudioInputStream audioIn = AudioSystem.getAudioInputStream(new File(url));
+        Clip clip = AudioSystem.getClip();
+        clip.open(audioIn);
+        clip.start();
+        }catch(Exception e){ 
+            e.printStackTrace();
+        }
     }
 
     public Snake getSnake() {
@@ -73,5 +93,9 @@ public class GameStates {
 
     public void setRunning(boolean running) {
         this.running = running;
+    }
+
+    public void setController(GameController controller) {
+        this.controller = controller;
     }
 }

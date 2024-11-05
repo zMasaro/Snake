@@ -17,6 +17,11 @@ public class Food {
     private static final int MAX_LIFESPAN = 5000;
     private static final int MIN_LIFESPAN = 1000;
 
+    public Food() {
+        lifespan = calculateLifespan(score);
+        startFoodRespawn();
+    }
+
     public void spawn(int maxX, int maxY) {
         x = random.nextInt(maxX) * GameConfig.SQUARE_SIZE;
         y = random.nextInt(maxY) * GameConfig.SQUARE_SIZE;
@@ -30,6 +35,15 @@ public class Food {
                 isActive = false;
             }
         }, lifespan);
+    }
+    
+    public void startFoodRespawn() {
+        new Timer().scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                spawn(GameConfig.PARALLEL_FRAMES, GameConfig.PARALLEL_FRAMES);
+            }
+        }, 0, (long) lifespan);
     }
 
     public int getX() {

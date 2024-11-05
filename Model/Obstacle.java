@@ -32,6 +32,8 @@ public class Obstacle {
                 spawnObstacle(GameConfig.PARALLEL_FRAMES, GameConfig.PARALLEL_FRAMES);
             }
         }, 0, (long) lifespan);
+        //Al delay de el respawn de la comida se la puede agregar un ramdon
+        //para que el tiempo de aparicion varie
     }
 
     public void spawnObstacle(int maxX, int maxY) {
