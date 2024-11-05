@@ -56,21 +56,7 @@ public class FrmSnake extends javax.swing.JInternalFrame implements ActionListen
         chronometer = new Chronometer(this);
         chronometer.start();
     }
-    public void changeSnakeColor(Color newColor, int duration) {
-    snakeColor =  Color.blue;
-    repaint();
-
     
-    new Thread(() -> {
-        try {
-            Thread.sleep(duration);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        snakeColor = Color.green; 
-        repaint(); 
-    }).start();
-}
 
 
     
@@ -162,11 +148,6 @@ public class FrmSnake extends javax.swing.JInternalFrame implements ActionListen
 
         jpSnake.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jpSnake.setPreferredSize(new java.awt.Dimension(600, 600));
-        jpSnake.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                jpSnakeKeyPressed(evt);
-            }
-        });
         // Variable para el color de la serpiente
 
         // Modifica el método paintComponent para usar snakeCol
@@ -190,46 +171,21 @@ public class FrmSnake extends javax.swing.JInternalFrame implements ActionListen
         txtApple.setFocusable(false);
         txtApple.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         txtApple.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jPanel2.add(txtApple);
 
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("Tiempo");
+        jPanel2.add(jLabel2);
 
         lbTime.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(16, 16, 16)
-                .addComponent(txtApple)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lbTime, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(149, 149, 149))
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(txtApple))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(15, 15, 15)
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lbTime, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+        jPanel2.add(lbTime);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jpSnake, javax.swing.GroupLayout.DEFAULT_SIZE, 615, Short.MAX_VALUE)
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jpSnake, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -242,23 +198,6 @@ public class FrmSnake extends javax.swing.JInternalFrame implements ActionListen
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jpSnakeKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jpSnakeKeyPressed
-        switch (evt.getKeyChar()) {
-                case 'w', 'W' -> {
-                    this.controller.keyPressed('w');
-                }
-                case 'a', 'A' -> {
-                    this.controller.keyPressed('a');
-                }
-                case 's', 'S' -> {
-                    this.controller.keyPressed('s');
-                }
-                case 'd', 'D' -> {
-                    this.controller.keyPressed('d');
-                }
-            }
-    }//GEN-LAST:event_jpSnakeKeyPressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
