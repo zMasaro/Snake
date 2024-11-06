@@ -37,6 +37,7 @@ public class Food {
         }, lifespan);
     }
     
+    
     public void startFoodRespawn() {
         new Timer().scheduleAtFixedRate(new TimerTask() {
             @Override

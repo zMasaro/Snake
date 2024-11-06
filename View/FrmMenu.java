@@ -3,6 +3,11 @@ package View;
 import Controller.GameController;
 import Model.GameStates;
 import java.awt.Graphics;
+import java.io.File;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.FloatControl;
 import javax.swing.ImageIcon;
 import javax.swing.JDesktopPane;
 
@@ -10,10 +15,7 @@ public class FrmMenu extends javax.swing.JFrame {
     
     public int record;
     
-    /**
-     * Creates new form FrmMenu
-     */
-    
+   
     public int getRecord() {
         return record;
     }
@@ -25,6 +27,7 @@ public class FrmMenu extends javax.swing.JFrame {
     public FrmMenu() {
         initComponents();
         this.setLocationRelativeTo(null);
+        this.sound("src/Access/Sounds/Musicxd.wav");
     }
     
     public FrmMenu getFrmMenu(){
@@ -34,6 +37,31 @@ public class FrmMenu extends javax.swing.JFrame {
     public JDesktopPane getDesktop() {
         return Desktop;
     }
+    private boolean isPlaying = false;
+
+   
+
+public void sound(String url) {
+    try {
+        if (!isPlaying) {
+            AudioInputStream audioIn = AudioSystem.getAudioInputStream(new File(url));
+            Clip clip = AudioSystem.getClip();
+            clip.open(audioIn);
+
+            // Configura el volumen bajo al inicio
+            FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+            float volume = -20.0f; // Valor en decibelios, -20.0f es un volumen bajo
+            gainControl.setValue(volume);
+
+            clip.loop(Clip.LOOP_CONTINUOUSLY); // Reproduce en bucle
+            clip.start();
+            isPlaying = true;
+        }
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+}
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -151,6 +179,7 @@ public class FrmMenu extends javax.swing.JFrame {
                 (this.Desktop.getHeight()-gameView.getHeight())/2);
         gameView.setVisible(true);
         gameView.setMenu(this);
+        
 }
     /**
      * @param args the command line arguments
