@@ -102,7 +102,7 @@ public class FrmSnake extends javax.swing.JInternalFrame implements ActionListen
 
     public void loose() {
         this.controller.getGameState().getObstacle().getObstacleRespawn().cancel();
-        //chronometer.stop();
+//        chronometer.stop();
         FrmReboot reboot = new FrmReboot(null, true);
         reboot.setMenu(menu);
         reboot.setLocation((menu.getDesktop().getWidth() - reboot.getWidth()) / 2,
@@ -143,7 +143,12 @@ public class FrmSnake extends javax.swing.JInternalFrame implements ActionListen
                 animacion.animation(g);
             }
         };
-        jPanel2 = new javax.swing.JPanel();
+        ImageIcon icon = new ImageIcon(getClass().getResource("/Access/Img/cap.png"));
+        jPanel2 = new javax.swing.JPanel(){
+            public void paintComponent(Graphics g){
+                g.drawImage(icon.getImage(),0,0,getWidth(),getHeight(),this);
+            }
+        };
         txtApple = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         lbTime = new javax.swing.JLabel();
@@ -170,9 +175,10 @@ public class FrmSnake extends javax.swing.JInternalFrame implements ActionListen
             .addGap(0, 600, Short.MAX_VALUE)
         );
 
-        jPanel2.setBackground(new java.awt.Color(51, 255, 51));
+        jPanel2.setBackground(new java.awt.Color(66, 149, 25));
 
         txtApple.setFont(new java.awt.Font("Showcard Gothic", 0, 14)); // NOI18N
+        txtApple.setForeground(new java.awt.Color(0, 0, 0));
         txtApple.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Access/Img/aple.png"))); // NOI18N
         txtApple.setText("0");
         txtApple.setFocusable(false);
@@ -180,10 +186,13 @@ public class FrmSnake extends javax.swing.JInternalFrame implements ActionListen
         txtApple.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jPanel2.add(txtApple);
 
+        jLabel2.setFont(new java.awt.Font("Showcard Gothic", 0, 14)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(0, 0, 0));
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("Tiempo");
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Access/Img/alarm-clock_563949.png"))); // NOI18N
         jPanel2.add(jLabel2);
 
+        lbTime.setFont(new java.awt.Font("Showcard Gothic", 0, 14)); // NOI18N
         lbTime.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jPanel2.add(lbTime);
 

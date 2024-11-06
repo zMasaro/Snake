@@ -9,13 +9,17 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.FloatControl;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JDesktopPane;
 
 public class FrmMenu extends javax.swing.JFrame {
     
     public int record;
-    
-   
+
+    public JButton getBtnplay1() {
+        return btnplay1;
+    }
+ 
     public int getRecord() {
         return record;
     }
@@ -87,14 +91,14 @@ public void sound(String url) {
 
         btnRules.setBackground(new java.awt.Color(0, 153, 51));
         btnRules.setFont(new java.awt.Font("Showcard Gothic", 0, 15)); // NOI18N
-        btnRules.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Access/Img/inbox.png"))); // NOI18N
+        btnRules.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Access/Img/info72.png"))); // NOI18N
         btnRules.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btnRules.setBorderPainted(false);
         btnRules.setContentAreaFilled(false);
         btnRules.setFocusable(false);
         btnRules.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnRules.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/Access/Img/play72.png"))); // NOI18N
-        btnRules.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Access/Img/play128.png"))); // NOI18N
+        btnRules.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/Access/Img/info64.png"))); // NOI18N
+        btnRules.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Access/Img/info92.png"))); // NOI18N
         btnRules.setVerifyInputWhenFocusTarget(false);
         btnRules.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btnRules.addActionListener(new java.awt.event.ActionListener() {
@@ -133,16 +137,14 @@ public void sound(String url) {
                 .addGap(0, 731, Short.MAX_VALUE)
                 .addComponent(btnplay1, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(DesktopLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(btnRules, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(btnRules, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         DesktopLayout.setVerticalGroup(
             DesktopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, DesktopLayout.createSequentialGroup()
-                .addGap(19, 19, 19)
-                .addComponent(btnRules, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 146, Short.MAX_VALUE)
+                .addComponent(btnRules, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 149, Short.MAX_VALUE)
                 .addComponent(btnplay1, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(173, 173, 173))
         );
@@ -168,6 +170,7 @@ public void sound(String url) {
 
     private void btnplay1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnplay1ActionPerformed
         initGame();
+        btnplay1.setEnabled(false);
     }//GEN-LAST:event_btnplay1ActionPerformed
 
     public void initGame(){

@@ -54,7 +54,7 @@ public class FrmReboot extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        ImageIcon icon = new ImageIcon(getClass().getResource("/Access/Img/YouLoose.jpg"));
+        ImageIcon icon = new ImageIcon(getClass().getResource("/Access/Img/reinicio.png"));
         jPanel1 = new javax.swing.JPanel(){
             public void paintComponent(Graphics g){
                 g.drawImage(icon.getImage(),0,0,getWidth(),getHeight(),this);
@@ -67,17 +67,20 @@ public class FrmReboot extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
+        jPanel1.setForeground(new java.awt.Color(91, 182, 89));
+
         btnReiniciar.setBackground(new java.awt.Color(0, 153, 51));
         btnReiniciar.setFont(new java.awt.Font("Showcard Gothic", 0, 15)); // NOI18N
-        btnReiniciar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Access/Img/play92.png"))); // NOI18N
+        btnReiniciar.setForeground(new java.awt.Color(0, 0, 0));
+        btnReiniciar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Access/Img/actu72.png"))); // NOI18N
         btnReiniciar.setText("Reiniciar");
         btnReiniciar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btnReiniciar.setBorderPainted(false);
         btnReiniciar.setContentAreaFilled(false);
         btnReiniciar.setFocusable(false);
         btnReiniciar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnReiniciar.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/Access/Img/play72.png"))); // NOI18N
-        btnReiniciar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Access/Img/play128.png"))); // NOI18N
+        btnReiniciar.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/Access/Img/actu64.png"))); // NOI18N
+        btnReiniciar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Access/Img/actu96.png"))); // NOI18N
         btnReiniciar.setVerifyInputWhenFocusTarget(false);
         btnReiniciar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btnReiniciar.addActionListener(new java.awt.event.ActionListener() {
@@ -87,22 +90,26 @@ public class FrmReboot extends javax.swing.JDialog {
         });
 
         btnRecord.setFont(new java.awt.Font("Showcard Gothic", 0, 14)); // NOI18N
+        btnRecord.setForeground(new java.awt.Color(0, 0, 0));
         btnRecord.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Access/Img/premio.png"))); // NOI18N
         btnRecord.setText("0");
         btnRecord.setFocusable(false);
         btnRecord.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnRecord.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
 
+        btnAple1.setBackground(new java.awt.Color(158, 240, 252));
         btnAple1.setFont(new java.awt.Font("Showcard Gothic", 0, 14)); // NOI18N
+        btnAple1.setForeground(new java.awt.Color(0, 0, 0));
         btnAple1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Access/Img/aple.png"))); // NOI18N
         btnAple1.setText("0");
-        btnAple1.setFocusable(false);
+        btnAple1.setAutoscrolls(true);
         btnAple1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnAple1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
 
         btnMenu1.setBackground(new java.awt.Color(0, 153, 51));
         btnMenu1.setFont(new java.awt.Font("Showcard Gothic", 0, 15)); // NOI18N
-        btnMenu1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Access/Img/play92.png"))); // NOI18N
+        btnMenu1.setForeground(new java.awt.Color(0, 0, 0));
+        btnMenu1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Access/Img/play72.png"))); // NOI18N
         btnMenu1.setText("Volver al menu");
         btnMenu1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btnMenu1.setBorderPainted(false);
@@ -124,45 +131,39 @@ public class FrmReboot extends javax.swing.JDialog {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(66, Short.MAX_VALUE)
-                .addComponent(btnAple1)
-                .addGap(106, 106, 106)
-                .addComponent(btnRecord)
-                .addGap(61, 61, 61))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(19, 19, 19)
                 .addComponent(btnReiniciar, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                    .addContainerGap(183, Short.MAX_VALUE)
-                    .addComponent(btnMenu1, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(16, 16, 16)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnMenu1, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(15, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(72, 72, 72)
+                .addComponent(btnAple1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnRecord)
+                .addGap(73, 73, 73))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(214, Short.MAX_VALUE)
+                .addContainerGap(177, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnAple1)
-                    .addComponent(btnRecord))
-                .addGap(35, 35, 35)
-                .addComponent(btnReiniciar)
-                .addGap(14, 14, 14))
-            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                    .addContainerGap(342, Short.MAX_VALUE)
-                    .addComponent(btnMenu1)
-                    .addGap(16, 16, 16)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(btnRecord)
+                        .addGap(48, 48, 48))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(btnAple1)
+                        .addGap(57, 57, 57)))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(btnReiniciar, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnMenu1, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -179,6 +180,7 @@ public class FrmReboot extends javax.swing.JDialog {
 
     private void btnMenu1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMenu1ActionPerformed
         this.dispose();
+        menu.getBtnplay1().setEnabled(true);
     }//GEN-LAST:event_btnMenu1ActionPerformed
 
     /**
