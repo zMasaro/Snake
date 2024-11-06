@@ -55,7 +55,7 @@
         </Property>
       </Properties>
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JPanel(){&#xa;    public void paintComponent(Graphics g){&#xa;        g.drawImage(ficon.getImage(),0,0,getWidth(),getHeight(),this);&#xa;        g.drawImage(foodIcon.getImage(),controller.getGameState().getFood().getX(),&#xa;            controller.getGameState().getFood().getY(),&#xa;            GameConfig.SQUARE_SIZE, GameConfig.SQUARE_SIZE,this);&#xa;        //Obstacle&#xa;        g.drawImage(obstacleIcon.getImage(),controller.getGameState().getObstacle().getX(),&#xa;            controller.getGameState().getObstacle().getY(),&#xa;            GameConfig.SQUARE_SIZE, GameConfig.SQUARE_SIZE,this);&#xa;&#xa;        //Snake&#xa;        g.setColor(Color.green);&#xa;        for (int i = 0; i &lt; controller.getGameState().getSnake().getSnakeBody(); i++) {&#xa;            float factor = 1 - (float) i / controller.getGameState().getSnake().getSnakeBody();&#xa;            g.setColor(new Color((int)(34 * factor), (int)(139 * factor), (int)(34 * (1 - factor))));&#xa;            g.fillRect(controller.getGameState().getSnake().getSnakeX()[i],&#xa;                controller.getGameState().getSnake().getSnakeY()[i],&#xa;                GameConfig.SQUARE_SIZE, GameConfig.SQUARE_SIZE);&#xa;        }&#xa;    }&#xa;}"/>
+        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JPanel(){&#xa;    public void paintComponent(Graphics g){&#xa;        super.paintComponent(g);&#xa;&#xa;        g.drawImage(ficon.getImage(),0,0,getWidth(),getHeight(),this);&#xa;        g.drawImage(foodIcon.getImage(),controller.getGameState().getFood().getX(),&#xa;            controller.getGameState().getFood().getY(),&#xa;            GameConfig.SQUARE_SIZE, GameConfig.SQUARE_SIZE,this);&#xa;        //Obstacle&#xa;        g.drawImage(obstacleIcon.getImage(),controller.getGameState().getObstacle().getX(),&#xa;            controller.getGameState().getObstacle().getY(),&#xa;            GameConfig.SQUARE_SIZE, GameConfig.SQUARE_SIZE,this);&#xa;&#xa;        for (int i = 0; i &lt; controller.getGameState().getSnake().getSnakeBody(); i++) {&#xa;            g.drawImage(controller.getGameView().getCircle(), controller.getGameState().getSnake().getSnakeX()[i], controller.getGameState().getSnake().getSnakeY()[i], GameConfig.SQUARE_SIZE, GameConfig.SQUARE_SIZE, controller.getGameView().getJpSnake());&#xa;        }&#xa;&#xa;        animacion.animation(g);&#xa;    }&#xa;}"/>
         <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="ImageIcon ficon = new ImageIcon(getClass().getResource(&quot;/Access/Img/FondoPerfecto.png&quot;));"/>
         <AuxValue name="JavaCodeGenerator_ListenersCodePost" type="java.lang.String" value="// Variable para el color de la serpiente&#xa;&#xa;// Modifica el m&#xe9;todo paintComponent para usar snakeCol"/>
       </AuxValues>
@@ -79,6 +79,8 @@
           <Color blue="33" green="ff" red="33" type="rgb"/>
         </Property>
       </Properties>
+
+      <Layout class="org.netbeans.modules.form.compat2.layouts.DesignFlowLayout"/>
       <SubComponents>
         <Component class="javax.swing.JLabel" name="txtApple">
           <Properties>

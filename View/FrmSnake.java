@@ -3,39 +3,51 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JInternalFrame.java to edit this template
  */
 package View;
+
 import Controller.GameController;
+import Model.Animation;
 import Model.Chronometer;
 import Model.GameConfig;
-import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
-
+import javax.swing.JPanel;
 
 /**
  *
  * @author zulay
  */
-public class FrmSnake extends javax.swing.JInternalFrame implements ActionListener{
+public class FrmSnake extends javax.swing.JInternalFrame implements ActionListener {
+
     private ImageIcon fontIcon = new ImageIcon(getClass().getResource("/Access/Img/Fondo.png"));
     private ImageIcon foodIcon = new ImageIcon(getClass().getResource("/Access/Img/aple.png"));
     private ImageIcon obstacleIcon = new ImageIcon(getClass().getResource("/Access/Img/spider.png"));
+
+    private Animation animacion;
+    
     private GameController controller;
     private Chronometer chronometer;
     private FrmMenu menu;
     private int apple;
-
-
-    public JLabel getLbTime() {
-        return lbTime;
-    }
+    private int animation = 0;
+    private Image circleYellow, circle;
 
     public void setController(GameController controller) {
         this.controller = controller;
+    }
+
+    public void setAnimacion(Animation animacion) {
+        this.animacion = animacion;
+    }
+    
+
+    public JLabel getLbTime() {
+        return lbTime;
     }
     
     public void setMenu(FrmMenu menu) {
@@ -43,9 +55,24 @@ public class FrmSnake extends javax.swing.JInternalFrame implements ActionListen
     }
 
     public int getApple() {
-        return controller.getGameState().getSnake().getSnakeBody()-5;
+        return controller.getGameState().getSnake().getSnakeBody() - 5;
     }
 
+    public int getAnimation() {
+        return animation;
+    }
+
+    public Image getCircleYellow() {
+        return circleYellow;
+    }
+
+    public Image getCircle() {
+        return circle;
+    }
+
+    public JPanel getJpSnake() {
+        return jpSnake;
+    }
     
     /**
      * Creates new form FrmSnake
@@ -53,51 +80,33 @@ public class FrmSnake extends javax.swing.JInternalFrame implements ActionListen
     public FrmSnake() {
         initComponents();
         this.addKeyListener(new Controls());
+        UpdateImg();
         chronometer = new Chronometer(this);
         chronometer.start();
     }
-    
 
 
-    
-    
-//    @Override
-//    protected void paintComponent(Graphics g) {
-//        super.paintComponent(g);
-//        //Font
-////        g.drawImage(fontIcon.getImage(),0,0,getWidth(),getHeight(),this);
-//        //Food
-//        g.drawImage(foodIcon.getImage(),this.controller.getGameState().getFood().getX(), 
-//                this.controller.getGameState().getFood().getY(),
-//                GameConfig.SQUARE_SIZE, GameConfig.SQUARE_SIZE,this);
-//        //Obstacle
-//        g.drawImage(obstacleIcon.getImage(),this.controller.getGameState().getObstacle().getX(), 
-//                this.controller.getGameState().getObstacle().getY(),
-//                GameConfig.SQUARE_SIZE, GameConfig.SQUARE_SIZE,this);
-//        //Snake
-//        g.setColor(Color.green);
-//        for (int i = 0; i < this.controller.getGameState().getSnake().getSnakeBody(); i++) {
-//            float factor = (float) i / this.controller.getGameState().getSnake().getSnakeBody();
-//            g.setColor(new Color((int)(34 * (1 - factor)), (int)(139 * (1 - factor)), (int)(34 * factor)));
-//            g.fillRect(this.controller.getGameState().getSnake().getSnakeX()[i], 
-//                    this.controller.getGameState().getSnake().getSnakeY()[i], GameConfig.SQUARE_SIZE, GameConfig.SQUARE_SIZE);
-//        }
-//    }
-    
+    public void UpdateImg() {
+        circleYellow = new ImageIcon(getClass().getResource("/Access/Img/SnakeBody/circleYellow.png")).getImage();
+        circle = new ImageIcon(getClass().getResource("/Access/Img/SnakeBody/circle.png")).getImage();
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         this.controller.action();
-        apple = controller.getGameState().getSnake().getSnakeBody()-5;
+        apple = controller.getGameState().getSnake().getSnakeBody() - 5;
         txtApple.setText(Integer.toString(apple));
+        jpSnake.repaint();
+        
     }
-    
-    public void loose(){
+
+    public void loose() {
         this.controller.getGameState().getObstacle().getObstacleRespawn().cancel();
         //chronometer.stop();
         FrmReboot reboot = new FrmReboot(null, true);
         reboot.setMenu(menu);
-        reboot.setLocation((menu.getDesktop().getWidth()-reboot.getWidth())/2, 
-                (menu.getDesktop().getHeight()-reboot.getHeight())/2);
+        reboot.setLocation((menu.getDesktop().getWidth() - reboot.getWidth()) / 2,
+                (menu.getDesktop().getHeight() - reboot.getHeight()) / 2);
         reboot.setBtnApple(apple);
         reboot.setBtnRecord(apple);
         reboot.setVisible(true);
@@ -116,6 +125,8 @@ public class FrmSnake extends javax.swing.JInternalFrame implements ActionListen
         ImageIcon ficon = new ImageIcon(getClass().getResource("/Access/Img/FondoPerfecto.png"));
         jpSnake = new javax.swing.JPanel(){
             public void paintComponent(Graphics g){
+                super.paintComponent(g);
+
                 g.drawImage(ficon.getImage(),0,0,getWidth(),getHeight(),this);
                 g.drawImage(foodIcon.getImage(),controller.getGameState().getFood().getX(),
                     controller.getGameState().getFood().getY(),
@@ -125,15 +136,11 @@ public class FrmSnake extends javax.swing.JInternalFrame implements ActionListen
                     controller.getGameState().getObstacle().getY(),
                     GameConfig.SQUARE_SIZE, GameConfig.SQUARE_SIZE,this);
 
-                //Snake
-                g.setColor(Color.green);
                 for (int i = 0; i < controller.getGameState().getSnake().getSnakeBody(); i++) {
-                    float factor = 1 - (float) i / controller.getGameState().getSnake().getSnakeBody();
-                    g.setColor(new Color((int)(34 * factor), (int)(139 * factor), (int)(34 * (1 - factor))));
-                    g.fillRect(controller.getGameState().getSnake().getSnakeX()[i],
-                        controller.getGameState().getSnake().getSnakeY()[i],
-                        GameConfig.SQUARE_SIZE, GameConfig.SQUARE_SIZE);
+                    g.drawImage(controller.getGameView().getCircle(), controller.getGameState().getSnake().getSnakeX()[i], controller.getGameState().getSnake().getSnakeY()[i], GameConfig.SQUARE_SIZE, GameConfig.SQUARE_SIZE, controller.getGameView().getJpSnake());
                 }
+
+                animacion.animation(g);
             }
         };
         jPanel2 = new javax.swing.JPanel();
@@ -227,4 +234,5 @@ public class Controls extends KeyAdapter {
             }
         }
     }
+
 }

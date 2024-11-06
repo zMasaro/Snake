@@ -22,12 +22,19 @@ public class GameController extends Thread {
         return gameState;
     }
 
+    public FrmSnake getGameView() {
+        return gameView;
+    }
+    
     public GameController(GameStates gameState, FrmSnake gameView) {
         this.gameState = gameState;
         gameState.setController(this);
         this.gameView = gameView;
         this.gameView.setController(this);
         this.gameView.setFocusable(true);
+        this.gameState.getAnimation().start();
+        this.gameState.getAnimation().setController(this);
+        this.gameView.setAnimacion(gameState.getAnimation());
         timer = new javax.swing.Timer(delay, gameView);
         timer.start();
     }

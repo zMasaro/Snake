@@ -20,11 +20,16 @@ public class GameStates {
     private Snake snake = new Snake();
     private Food food = new Food();
     private Obstacle obstacle = new Obstacle();
+    private Animation animation = new Animation();
 
     public GameStates() {
         food.spawn(GameConfig.PARALLEL_FRAMES, GameConfig.PARALLEL_FRAMES);
         obstacle.spawnObstacle(GameConfig.PARALLEL_FRAMES, GameConfig.PARALLEL_FRAMES);
-        
+        animation.setController(controller);
+    }
+
+    public Animation getAnimation() {
+        return animation;
     }
 
     public void checkCollision() {
@@ -53,6 +58,7 @@ public class GameStates {
             controller.getTimer().setDelay(controller.getTimer().getDelay()-1);
             sound("src/Access/Sounds/collision.wav");
             food.spawn(GameConfig.PARALLEL_FRAMES, GameConfig.PARALLEL_FRAMES);
+            animation.setB(running);
         }
     }
     
